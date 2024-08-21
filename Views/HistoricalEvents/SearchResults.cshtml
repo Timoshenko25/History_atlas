@@ -1,0 +1,18 @@
+﻿@model IEnumerable<PromHistory.Models.HistoricalEvent>
+
+<h3>Исторические события</h3>
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Дата</th>
+        <th>Описание</th>
+    </tr>
+    @foreach (var historyEvent in Model)
+    {
+        <tr>
+            <td>@historyEvent.Title</td>
+            <td onclick="loadAddHistory(@historyEvent.Id)" style="cursor:pointer; color: #0033FF">@historyEvent.Date</td>
+            <td>@historyEvent.Description</td>
+        </tr>
+    }
+</table>

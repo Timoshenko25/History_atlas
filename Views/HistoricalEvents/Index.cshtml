@@ -1,0 +1,291 @@
+﻿@model IEnumerable<PromHistory.Models.HistoricalEvent>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Исторический атлас России</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+           
+            padding: 0;
+            font-size: 18px;
+            background-color: rgba(205, 183, 158);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        header {
+            background-color: rgba(139, 125, 123, 0.9);
+            padding: 18px;
+            text-align: center;
+            border-bottom: 2px solid #333;
+        }
+
+            header h1 {
+                font-size: 50px;
+                font-weight: 600;
+                font-family: 'Roboto', sans-serif;
+                color: #000; /* Теплый оранжевый цвет */
+                text-transform: uppercase;
+                /*text-shadow: 1px 1px 0px #b59a5c, 1px 2px 0px #b59a5c, 1px 3px 0px #b59a5c, 1px 4px 0px #b59a5c, 1px 5px 0px #b59a5c, 1px 6px 0px #b59a5c, 1px 10px 5px rgba(16, 16, 16, 0.5), 1px 15px 10px rgba(16, 16, 16, 0.4), 1px 20px 30px rgba(16, 16, 16, 0.3), 1px 25px 50px rgba(16, 16, 16, 0.2);*/
+            }
+
+        main {
+            padding: 20px;
+            margin: auto;
+            background-color: rgba(250, 250, 250);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(139, 125, 123);
+            color: white;
+            margin-left: 10px;
+        }
+
+            .button:hover {
+                background-color: #45a049;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        tr:hover {
+            background-color: rgba(200, 200, 200, 0.5);
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .facts-container, .main-container, .empty-container {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .facts-container {
+            width: 20%;
+        }
+
+        .main-container {
+            width: 60%;
+        }
+
+        .empty-container {
+            width: 20%;
+        }
+
+        .fact-image {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .fact-item p {
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Исторический атлас России</h1>
+    </header>
+    <main>
+        <div id="details-container" style="display: none;"></div>
+        <div class="container">
+            <div class="facts-container">
+                <h2>Интересные факты</h2>
+                <div class="fact-item" data-details="У древнерусского князя Ярослава Мудрого было семь детей. Четыре сына после его смерти разделили правление русскими землями, а вот дочери ещё при жизни отца успешно вышли замуж и уехали за границу.
+
+Старшая дочь Анастасия стала женой венгерского герцога Андраша. Через девять лет после свадьбы он вступил на престол, и дочь князя стала королевой Венгрии. Она успела и сама поуправлять страной. История сложная, но если коротко — Андраша убил его родной брат Бела, который затем сам недолго правил Венгрией, но вскоре погиб: легенда гласит, что под ним рухнул трон. Тогда престол занял старший сын Анастасии Шаламон. Мальчику было всего 10 лет, в силу возраста он не мог принимать серьёзные решения, поэтому ему помогала мама.
+
+Средняя дочь князя Елизавета вышла замуж за Харальда — он был братом норвежского короля, а когда того убили, поступил на службу к Ярославу Мудрому. Когда Харальд впервые посватался к царевне, у него не было ни денег, ни громкого титула — отца Елизаветы это не устраивало. Но Харальд не стал сдаваться: он записался в наёмники к императору Византии и воевал в разных странах, чтобы заработать состояние. Уже с деньгами и статусом Харальд снова пришёл просить руки Елизаветы. В этот раз Ярослав Мудрый согласился. Молодожёны уехали в Скандинавию, спустя несколько лет Харальд стал королём Норвегии.
+
+С младшей дочкой князя Анной всё намного проще. Французский король Генрих I услышал о красоте молодой девушки и в 1051 году взял её в жёны. Возможно, к этому союзу приложил руку Андраш, в браке с которым состояла сестра Анны. Венгерский король якобы мечтал заключить таким образом союз с Францией. Через девять лет после свадьбы король умер, а Анна вышла замуж за графа Рауля де Крепи.">
+                    <a href="#">
+                        <img src="https://cf3.ppt-online.org/files3/slide/m/Mkjgu43w0Ky2iYqmGZREV69LInaSbsUXFAtfpl/slide-20.jpg" alt="Факт 1" class="fact-image">
+                        <p>Все дочери Ярослава Мудрого стали жёнами европейских королей</p>
+                    </a>
+                </div>
+                <div class="fact-item" data-details="О том, что России в своё время принадлежала Аляска, знают, кажется, все. Но русскими были и некоторые другие территории США, в том числе часть земли на острове Кауаи на Гавайях.
+
+Впервые русские прибыли туда в 1804 году. Экипаж кругосветной экспедиции, в составе которого был Иван Крузенштерн (тот самый «человек и пароход»), посетили Гавайи и познакомились с королями Камеамеа и Каумуалии. Первый правил шестью основными островами архипелага, а во владения последнего входили только острова Кауаи и Ниихау. Каумуалии сказал участникам экспедиции, что хотел бы войти в подданство Российской империи, если она поможет ему защититься от нападений короля Камеамеа. Но на этом контакт с гавайским королём оборвался.
+
+Прошло около 10 лет. На берегах Кауаи потерпел крушение и был захвачен местными жителями российский корабль «Беринг». Освобождать его отправили вооружённую экспедицию, в состав которой входил врач Георг Шеффер. Он провёл успешные переговоры с Каумуалии: король вернул судно, принёс присягу на верность императору, дал России монополию на торговлю сандаловым деревом и выделил 500 подданных своего королевства для необходимых работ.
+
+Гавайцы помогли русским построить три укрепления: два из них были простыми земляными валами, а одно — каменной стеной‑крепостью, которую назвали Елизаветинской, в честь жены императора Александра I. Шеффер сообщил о своих успехах начальству, но поддержки не получил. Тем временем на Гавайи претендовали американцы и европейцы. В 1817 году после вооружённого столкновения с противниками Шеффер со своими людьми покинул остров.
+
+После Елизаветинская крепость недолго использовалась Гавайским королевством, а затем была брошена. В 1966 году её признали историческим памятником США.">
+                    <a href="#">
+                        <img src="https://avatars.dzeninfra.ru/get-zen_doc/1874110/pub_5fd5093764f2df18977c9b53_5fd7bbd5b4e7717869c66730/scale_1200" alt="Факт 2" class="fact-image">
+                        <p>
+                            У Российской империи была крепость на Гавайях
+                        </p>
+
+                    </a>
+                </div>
+                <div class="fact-item" data-details="Официальный день рождения Сталина — 18 (6 по старому календарю) декабря 1878 года. Об этом говорится в метрической книге Успенского собора родного города политика Гори, в аттестате Сталина об окончании Горийского духовного училища и в ряде других документов. Однако в СССР с днём рождения его поздравляли не 18, а 21 декабря. Кроме того, после 1917 года Сталин внезапно помолодел: с этого времени в документах стали указывать в качестве года рождения вождя 1879.
+
+Есть несколько версий, почему произошла такая неразбериха:
+
+В 1928 году Сталин из‑за непростой политической ситуации посчитал неуместным отмечать юбилей. Поэтому взял и перенёс празднование на следующий год.
+Мистик и астролог Георгий Гурджиев, с которым якобы был знаком Сталин, посоветовал тому сменить даты, чтобы привлечь удачу. Отец народов верил в магию цифр, а потому послушал приятеля.
+Сталин, как революционер, часто использовал поддельные документы с ложными именами, фамилиями и днями рождения. Когда в 1922 году неверная дата попала в энциклопедию, он решил ничего не менять.
+Запись в метрической книге относится к другому ребёнку. Просто полному тёзке.">
+                    <a href="#">
+                        <img src="https://proza.ru/pics/2023/04/14/431.jpg" alt="Факт 3" class="fact-image">
+                        <p>
+                            У Иосифа Сталина два дня рождения
+                        </p>
+
+                    </a>
+                </div>
+                <div class="fact-item" data-details="В середине XX века торговые отношения между СССР и США были напряжёнными. Возможно, особенно страдал из‑за этого Георгий Жуков — маршал очень любил американскую газировку. Попробовал он её во время Второй мировой войны: например, Жуков распивал колу на встрече с американским генералом Дуайтом Эйзенхауэром. А вот в СССР маршал не мог появляться с напитком на людях — такое поведение шло бы вразрез с официальной политикой государства.
+
+Впрочем, он нашёл выход из ситуации: колу нужно было избавить от характерного коричневого цвета. Жуков попросил американских коллег выяснить, возможно ли это. Оказалось, да! На заводе из ингредиентов просто убрали карамель. Затем напиток разлили в особые немаркированные бутылки и отправили адресату. Получил маршал заветную посылку или нет, неизвестно.">
+                    <a href="#">
+                        <img src="https://szao.mos.ru/upload/medialibrary/e35/zhukov_georgiy_fotobank_.jpg" alt="Факт 4" class="fact-image">
+                        <p>
+                            По поручению маршала Жукова создали партию бесцветной кока‑колы
+                        </p>
+
+                    </a>
+                </div>
+            </div>
+
+            <div class="main-container">
+                <div class="search-container">
+                    <input type="text" id="searchTerm" class="search" placeholder="Поиск по событиям...">
+                    <button class="button" onclick="search()">Поиск </button>
+                </div>
+
+                <div id="searchResults"></div>
+
+                <div id="eventTable" style="display: block;">
+                    @if (!Model.Any())
+                    {
+                        <p>Ничего не найдено.</p>
+                    }
+                    else
+                    {
+                        <h3>Исторические события</h3>
+                        <table>
+                            <tr><th>Название</th><th>Дата</th><th>Описание</th></tr>
+                            @foreach (var historyEvent in Model)
+                            {
+                                <tr>
+                                    <td>@historyEvent.Title</td>
+                                    <td onclick="loadAddHistory(@historyEvent.Id)" style="cursor:pointer; color: #0033FF">@historyEvent.Date</td>
+                                    <td>@historyEvent.Description</td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                </div>
+
+                <div id="addHistoryDetails" style="display: none;">
+                    <!-- Here the additional details will be loaded -->
+                </div>
+
+                <button id="backButton" style="display: none;" onclick="showEventTable()">Назад</button>
+            </div>
+
+            <script>
+                function search() {
+                    var searchTerm = document.getElementById('searchTerm').value;
+                    fetch('/HistoricalEvents/Search?searchTerm=' + encodeURIComponent(searchTerm))
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response.statusText);
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            document.getElementById('searchResults').innerHTML = data;
+                            document.getElementById('eventTable').style.display = 'none';
+                            history.pushState({ search: true }, '', '/HistoricalEvents/Search?searchTerm=' + encodeURIComponent(searchTerm));
+                        })
+                        .catch(error => console.error('There was a problem with the fetch operation:', error));
+                }
+        function loadAddHistory(historyId) {
+            console.log('Loading history for ID:', historyId);
+            fetch('/HistoricalEvents/GetAddHistory?historyId=' + historyId)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log('Received data:', data);
+                    document.getElementById('addHistoryDetails').innerHTML = data;
+                    document.getElementById('eventTable').style.display = 'none';
+                    document.getElementById('addHistoryDetails').style.display = 'block';
+                    history.pushState({ eventId: historyId }, '', '/HistoricalEvents/Details/' + historyId);
+                })
+                .catch(error => console.error('There was a problem with the fetch operation:', error));
+        }
+
+        function showEventTable() {
+            document.getElementById('eventTable').style.display = 'block';
+            document.getElementById('addHistoryDetails').style.display = 'none';
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('backButton').style.display = 'none';
+        }
+
+        window.onpopstate = function (event) {
+            if (event.state && event.state.search) {
+                showEventTable();
+            } else if (event.state && event.state.eventId) {
+                showEventTable();
+            } else {
+                showEventTable();
+            }
+        };
+                const factItems = document.querySelectorAll('.fact-item');
+                const detailsContainer = document.getElementById('details-container');
+
+                factItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const details = item.getAttribute('data-details');
+                        detailsContainer.innerHTML = details;
+                        detailsContainer.style.display = 'block';
+                    });
+                });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<PromHistory.Models.AddHistory>
+
+    <h3>Дополнительные события</h3>
+    <ul>
+        @foreach (var addHistory in Model)
+        {
+            <li>
+              <strong>Описание:</strong> @Html.Raw(addHistory.Description) <!-- Теперь уже преобразовано -->
+            </li>
+        }
+    </ul>
+
